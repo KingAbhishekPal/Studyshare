@@ -348,7 +348,7 @@ app.post('/api/contact', async (req, res, next) => {
 });
 
 app.get('/', (_req, res) => {
-  res.sendFile(path.join(publicDir, 'StudyShare.html'));
+  res.sendFile(path.join(publicDir, 'index.html'));
 });
 
 app.use((err, _req, res, _next) => {
