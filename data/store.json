@@ -1,0 +1,125 @@
+{
+  "materials": [
+    {
+      "id": 1,
+      "title": "Algebra Basics: Linear Equations",
+      "subject": "math",
+      "grade": "Grade 6-8",
+      "desc": "Step-by-step guide to solving linear equations with variables on both sides. Includes worked examples and practice problems.",
+      "downloads": 142,
+      "author": "Priya S.",
+      "createdAt": "2026-04-24T00:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "title": "Quadratic Equations - Complete Notes",
+      "subject": "math",
+      "grade": "Grade 9-10",
+      "desc": "Factorization, completing the square, and the quadratic formula explained clearly with diagrams and example sets.",
+      "downloads": 100,
+      "author": "Rahul M.",
+      "createdAt": "2026-04-24T00:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "title": "Photosynthesis - Full Study Guide",
+      "subject": "science",
+      "grade": "Grade 9-10",
+      "desc": "Light and dark reactions, chloroplasts, and the Calvin cycle. Includes labeled diagrams and key definitions for exam revision.",
+      "downloads": 218,
+      "author": "Anika R.",
+      "createdAt": "2026-04-24T00:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "title": "Periodic Table and Chemical Bonding",
+      "subject": "science",
+      "grade": "Grade 11-12",
+      "desc": "Ionic, covalent, and metallic bonding explained with electron dot diagrams. Covers periodic trends and reactivity series.",
+      "downloads": 177,
+      "author": "Vikram K.",
+      "createdAt": "2026-04-24T00:00:00.000Z"
+    },
+    {
+      "id": 5,
+      "title": "Essay Writing: Structure and Techniques",
+      "subject": "english",
+      "grade": "Grade 9-10",
+      "desc": "How to write a strong introduction, well-structured body paragraphs, and a powerful conclusion. Includes essay templates.",
+      "downloads": 134,
+      "author": "Sneha P.",
+      "createdAt": "2026-04-24T00:00:00.000Z"
+    },
+    {
+      "id": 6,
+      "title": "Romeo and Juliet - Character Analysis",
+      "subject": "english",
+      "grade": "Grade 11-12",
+      "desc": "Detailed analysis of main characters, key themes, important quotes, and historical context of the play.",
+      "downloads": 89,
+      "author": "StudyShare",
+      "createdAt": "2026-04-24T00:00:00.000Z"
+    },
+    {
+      "id": 7,
+      "title": "World War II: Complete Timeline",
+      "subject": "history",
+      "grade": "Grade 11-12",
+      "desc": "Chronological overview of World War II from 1939 to 1945, covering major battles, key figures, turning points, and the aftermath.",
+      "downloads": 203,
+      "author": "Arjun T.",
+      "createdAt": "2026-04-24T00:00:00.000Z"
+    },
+    {
+      "id": 8,
+      "title": "Indian Independence Movement",
+      "subject": "history",
+      "grade": "Grade 9-10",
+      "desc": "Key events from 1857 to 1947, important leaders, major movements, and the path to independence.",
+      "downloads": 167,
+      "author": "Meera D.",
+      "createdAt": "2026-04-24T00:00:00.000Z"
+    },
+    {
+      "id": 9,
+      "title": "Python for Beginners - Variables and Loops",
+      "subject": "coding",
+      "grade": "University",
+      "desc": "Variables, data types, if/else statements, for loops, and while loops explained with clear code examples for absolute beginners.",
+      "downloads": 312,
+      "author": "Dev C.",
+      "createdAt": "2026-04-24T00:00:00.000Z"
+    },
+    {
+      "id": 10,
+      "title": "HTML and CSS Fundamentals",
+      "subject": "coding",
+      "grade": "Grade 11-12",
+      "desc": "Building your first webpage from scratch. Covers HTML tags, CSS selectors, flexbox layout, and responsive design basics.",
+      "downloads": 258,
+      "author": "StudyShare",
+      "createdAt": "2026-04-24T00:00:00.000Z"
+    },
+    {
+      "id": 11,
+      "title": "Climate Zones and Biomes of the World",
+      "subject": "geo",
+      "grade": "Grade 6-8",
+      "desc": "Overview of Earth major climate zones, corresponding biomes, flora and fauna, and how human activity affects each region.",
+      "downloads": 95,
+      "author": "Natasha G.",
+      "createdAt": "2026-04-24T00:00:00.000Z"
+    },
+    {
+      "id": 12,
+      "title": "Rivers, Landforms and Erosion",
+      "subject": "geo",
+      "grade": "Grade 9-10",
+      "desc": "How rivers shape landscapes through erosion, transportation, and deposition. Includes diagrams of valleys, ox-bow lakes, and deltas.",
+      "downloads": 78,
+      "author": "StudyShare",
+      "createdAt": "2026-04-24T00:00:00.000Z"
+    }
+  ],
+  "contacts": []
+}

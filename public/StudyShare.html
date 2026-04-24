@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyShare - Free Study Materials for All</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="StudyShare.css">
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-logo">Study<span>Share</span></div>
+  <ul class="nav-links">
+    <li><a href="#materials">Materials</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#" onclick="openBookmarks(event)">Saved (<span id="bookmarkCount">0</span>)</a></li>
+    <li><a href="#" class="nav-cta" onclick="openModal(event)">+ Share Notes</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>Free Study Materials<br>for <em>Every</em> Student</h1>
+    <p>Browse, download, and share notes, guides and summaries across all subjects completely free. Join thousands of students learning together.</p>
+    <div class="hero-search">
+      <span style="margin-right:8px; font-size:1.1rem;">🔍</span>
+      <input type="text" id="heroSearch" placeholder="Search by subject, topic, or grade level..." oninput="filterMaterials()">
+      <button onclick="filterMaterials()">Search</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-num" id="totalCount">12</span>
+        <span class="hero-stat-label">Study Materials</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">6</span>
+        <span class="hero-stat-label">Subjects</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">100%</span>
+        <span class="hero-stat-label">Free Forever</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">24/7</span>
+        <span class="hero-stat-label">Access</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="background:var(--primary);">
+  <path d="M0,32 C360,0 1080,64 1440,16 L1440,48 L0,48 Z" fill="#f8faf9"/>
+</svg>
+
+<section id="materials">
+  <div class="section">
+    <div class="section-head">
+      <div class="section-title">Browse <span>Study Materials</span></div>
+      <div class="result-info" id="resultInfo">Showing all 12 materials</div>
+    </div>
+  </div>
+
+  <div class="filter-row">
+    <button class="filter-btn active" onclick="setFilter('all',this)">All Subjects</button>
+    <button class="filter-btn" onclick="setFilter('math',this)">Mathematics</button>
+    <button class="filter-btn" onclick="setFilter('science',this)">Science</button>
+    <button class="filter-btn" onclick="setFilter('english',this)">English</button>
+    <button class="filter-btn" onclick="setFilter('history',this)">History</button>
+    <button class="filter-btn" onclick="setFilter('coding',this)">Coding</button>
+    <button class="filter-btn" onclick="setFilter('geo',this)">Geography</button>
+  </div>
+
+  <div class="section" style="padding-top:20px;">
+    <div class="cards-grid" id="cardsGrid"></div>
+  </div>
+</section>
+
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <div class="about-text">
+      <h2>Why <span>StudyShare</span><br>Matters</h2>
+      <p>Every student deserves access to quality education resources, regardless of their economic background or geographic location. StudyShare is built on the belief that knowledge should be free and accessible to all.</p>
+      <p>Our platform helps bridge the gap between students who have access to rich learning materials and those who need better study support.</p>
+    </div>
+    <div class="about-cards">
+      <div class="about-card">
+        <div class="about-icon">📚</div>
+        <div>
+          <h4>Free Access for All</h4>
+          <p>No paywalls, no subscriptions. Every piece of content on StudyShare is permanently free to access and download.</p>
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-icon">🌐</div>
+        <div>
+          <h4>Community Driven</h4>
+          <p>Students and teachers contribute their own notes and guides, creating a growing library of peer-reviewed materials.</p>
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-icon">🎯</div>
+        <div>
+          <h4>Practical Learning</h4>
+          <p>Clear notes, revision guides, and summaries help learners study smarter and stay prepared for exams.</p>
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-icon">📱</div>
+        <div>
+          <h4>Works on Any Device</h4>
+          <p>Fully responsive design works on any smartphone, tablet or computer, even on slow internet connections.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how-section" id="how">
+  <div class="how-inner">
+    <div class="how-title">How <span>StudyShare</span> Works</div>
+    <div class="steps-row">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Browse Materials</h4>
+        <p>Explore hundreds of free study notes, summaries, and guides organized by subject and grade level.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>Search and Filter</h4>
+        <p>Use the search bar or subject filters to instantly find exactly what you need for your studies.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>Save and Download</h4>
+        <p>Bookmark materials to your saved list or download them for offline use on any device.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h4>Share Your Notes</h4>
+        <p>Contribute your own study materials to help other students across the world learn better.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="contact-inner">
+    <h2>Get in Touch</h2>
+    <p>Have a question, suggestion, or want to partner with StudyShare to bring free education to more students? We'd love to hear from you.</p>
+    <div class="contact-form">
+      <input type="text" id="cName" placeholder="Your Name">
+      <input type="email" id="cEmail" placeholder="Your Email">
+      <textarea id="cMsg" placeholder="Your message..."></textarea>
+      <button class="contact-btn" onclick="sendContact()">Send Message</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="nav-logo">Study<span>Share</span></span>
+      <p>A free platform for sharing and accessing quality study materials. Built for students, by students.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#materials">Browse Materials</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Subjects</h4>
+      <ul>
+        <li><a href="#">Mathematics</a></li>
+        <li><a href="#">Science</a></li>
+        <li><a href="#">English</a></li>
+        <li><a href="#">History</a></li>
+        <li><a href="#">Coding</a></li>
+        <li><a href="#">Geography</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 StudyShare. Built for Lenovo Capstone Project</p>
+  </div>
+</footer>
+
+<div class="overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <h2>Share Study Material</h2>
+        <p>Help other students by contributing your notes</p>
+      </div>
+      <button class="close-btn" onclick="closeModal()">✕</button>
+    </div>
+    <div class="form-group">
+      <label>Title *</label>
+      <input type="text" id="mTitle" placeholder="e.g. Algebra Basics - Linear Equations">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Subject *</label>
+        <select id="mSubject">
+          <option value="">Select...</option>
+          <option value="math">Mathematics</option>
+          <option value="science">Science</option>
+          <option value="english">English</option>
+          <option value="history">History</option>
+          <option value="coding">Coding</option>
+          <option value="geo">Geography</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Grade Level *</label>
+        <select id="mGrade">
+          <option value="">Select...</option>
+          <option>Grade 6-8</option>
+          <option>Grade 9-10</option>
+          <option>Grade 11-12</option>
+          <option>University</option>
+          <option>All Levels</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Description *</label>
+      <textarea id="mDesc" placeholder="Briefly describe what topics this material covers..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Author Name</label>
+      <input type="text" id="mAuthor" placeholder="Your name (optional)">
+    </div>
+    <button class="btn-submit" onclick="submitMaterial()">Share Material with Everyone</button>
+  </div>
+</div>
+
+<div class="panel-overlay" id="panelOverlay" onclick="closeBookmarks()"></div>
+<div class="side-panel" id="sidePanel">
+  <div class="panel-header">
+    <h3>Saved Materials</h3>
+    <button class="close-btn" onclick="closeBookmarks()">✕</button>
+  </div>
+  <div class="panel-body" id="panelBody">
+    <div class="no-bookmarks">No saved materials yet.<br>Click the bookmark icon on any card to save it!</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="StudyShare.js"></script>
+</body>
+</html>
