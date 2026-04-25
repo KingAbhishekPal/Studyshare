@@ -10,6 +10,7 @@ const subjectConfig = {
 let materials = [];
 let activeFilter = 'all';
 let bookmarks = JSON.parse(localStorage.getItem('studyshare-bookmarks') || '[]');
+let usingFallbackData = false;
 
 async function apiFetch(url, options = {}) {
   const response = await fetch(url, {
@@ -25,6 +26,50 @@ async function apiFetch(url, options = {}) {
   }
 
   return data;
+}
+
+function escapeRegExp(value) {
+  return String(value || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function getEmbeddedMaterials() {
+  const fallbackNode = document.getElementById('fallbackStoreData');
+
+  if (!fallbackNode) {
+    return [];
+  }
+
+  try {
+    const data = JSON.parse(fallbackNode.textContent);
+    return Array.isArray(data.materials) ? data.materials : [];
+  } catch (error) {
+    console.error('Failed to parse embedded materials:', error);
+    return [];
+  }
+}
+
+function filterFallbackMaterials() {
+  const search = getSearchValue();
+  const searchPattern = search ? new RegExp(escapeRegExp(search), 'i') : null;
+  const fallbackMaterials = getEmbeddedMaterials();
+
+  return fallbackMaterials.filter((material) => {
+    if (activeFilter !== 'all' && material.subject !== activeFilter) {
+      return false;
+    }
+
+    if (!searchPattern) {
+      return true;
+    }
+
+    return [
+      material.title,
+      material.desc,
+      material.grade,
+      material.author,
+      material.subject
+    ].some((field) => searchPattern.test(String(field || '')));
+  });
 }
 
 function saveBookmarks() {
@@ -47,17 +92,31 @@ async function loadMaterials() {
     params.set('search', search);
   }
 
-  const query = params.toString();
-  const data = await apiFetch(`/api/materials${query ? `?${query}` : ''}`);
-  materials = data.items;
+  try {
+    const query = params.toString();
+    const data = await apiFetch(`/api/materials${query ? `?${query}` : ''}`);
 
-  document.getElementById('resultInfo').textContent =
-    data.filtered === data.total
-      ? `Showing all ${data.total} materials`
-      : `Showing ${data.filtered} of ${data.total} materials`;
+    usingFallbackData = false;
+    materials = data.items;
+    document.getElementById('resultInfo').textContent =
+      data.filtered === data.total
+        ? `Showing all ${data.total} materials`
+        : `Showing ${data.filtered} of ${data.total} materials`;
+    document.getElementById('totalCount').textContent = data.total;
+    renderCards();
+  } catch (error) {
+    const fallbackMaterials = filterFallbackMaterials();
+    const totalFallbackMaterials = getEmbeddedMaterials().length;
 
-  document.getElementById('totalCount').textContent = data.total;
-  renderCards();
+    usingFallbackData = true;
+    materials = fallbackMaterials;
+    document.getElementById('resultInfo').textContent =
+      fallbackMaterials.length === totalFallbackMaterials
+        ? `Showing all ${totalFallbackMaterials} materials`
+        : `Showing ${fallbackMaterials.length} of ${totalFallbackMaterials} materials`;
+    document.getElementById('totalCount').textContent = totalFallbackMaterials;
+    renderCards();
+  }
 }
 
 function renderCards() {
@@ -121,6 +180,11 @@ async function clearSearch() {
 }
 
 async function downloadMaterial(id, button) {
+  if (usingFallbackData) {
+    showToast('Start the server to enable downloads and save changes');
+    return;
+  }
+
   try {
     const material = await apiFetch(`/api/materials/${id}/download`, { method: 'POST' });
     button.textContent = 'Saved';
@@ -223,6 +287,11 @@ async function submitMaterial() {
     return;
   }
 
+  if (usingFallbackData) {
+    showToast('Start the server to share new materials');
+    return;
+  }
+
   try {
     await apiFetch('/api/materials', {
       method: 'POST',
@@ -257,6 +326,11 @@ async function sendContact() {
     return;
   }
 
+  if (usingFallbackData) {
+    showToast('Start the server to send messages');
+    return;
+  }
+
   try {
     await apiFetch('/api/contact', {
       method: 'POST',
@@ -287,6 +361,9 @@ async function init() {
 
   try {
     await loadMaterials();
+    if (usingFallbackData) {
+      showToast('Showing saved materials from local page data');
+    }
   } catch (error) {
     showToast('Failed to load materials from the server');
     console.error(error);

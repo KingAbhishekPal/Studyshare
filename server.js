@@ -1,6 +1,5 @@
 const express = require('express');
 const fs = require('fs');
-const mongoose = require('mongoose');
 const path = require('path');
 
 function loadEnvFile() {
@@ -37,8 +36,9 @@ loadEnvFile();
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/studyshare';
 const publicDir = path.join(__dirname, 'public');
+const dataDir = path.join(__dirname, 'data');
+const storeFile = path.join(dataDir, 'store.json');
 const allowedSubjects = ['math', 'science', 'english', 'history', 'coding', 'geo'];
 
 const seedMaterials = [
@@ -50,7 +50,7 @@ const seedMaterials = [
     desc: 'Step-by-step guide to solving linear equations with variables on both sides. Includes worked examples and practice problems.',
     downloads: 142,
     author: 'Priya S.',
-    createdAt: new Date('2026-04-24T00:00:00.000Z')
+    createdAt: '2026-04-24T00:00:00.000Z'
   },
   {
     id: 2,
@@ -60,7 +60,7 @@ const seedMaterials = [
     desc: 'Factorization, completing the square, and the quadratic formula explained clearly with diagrams and example sets.',
     downloads: 98,
     author: 'Rahul M.',
-    createdAt: new Date('2026-04-24T00:00:00.000Z')
+    createdAt: '2026-04-24T00:00:00.000Z'
   },
   {
     id: 3,
@@ -70,7 +70,7 @@ const seedMaterials = [
     desc: 'Light and dark reactions, chloroplasts, and the Calvin cycle. Includes labeled diagrams and key definitions for exam revision.',
     downloads: 217,
     author: 'Anika R.',
-    createdAt: new Date('2026-04-24T00:00:00.000Z')
+    createdAt: '2026-04-24T00:00:00.000Z'
   },
   {
     id: 4,
@@ -80,7 +80,7 @@ const seedMaterials = [
     desc: 'Ionic, covalent, and metallic bonding explained with electron dot diagrams. Covers periodic trends and reactivity series.',
     downloads: 176,
     author: 'Vikram K.',
-    createdAt: new Date('2026-04-24T00:00:00.000Z')
+    createdAt: '2026-04-24T00:00:00.000Z'
   },
   {
     id: 5,
@@ -90,7 +90,7 @@ const seedMaterials = [
     desc: 'How to write a strong introduction, well-structured body paragraphs, and a powerful conclusion. Includes essay templates.',
     downloads: 134,
     author: 'Sneha P.',
-    createdAt: new Date('2026-04-24T00:00:00.000Z')
+    createdAt: '2026-04-24T00:00:00.000Z'
   },
   {
     id: 6,
@@ -100,7 +100,7 @@ const seedMaterials = [
     desc: 'Detailed analysis of main characters, key themes, important quotes, and historical context of the play.',
     downloads: 89,
     author: 'StudyShare',
-    createdAt: new Date('2026-04-24T00:00:00.000Z')
+    createdAt: '2026-04-24T00:00:00.000Z'
   },
   {
     id: 7,
@@ -110,7 +110,7 @@ const seedMaterials = [
     desc: 'Chronological overview of World War II from 1939 to 1945, covering major battles, key figures, turning points, and the aftermath.',
     downloads: 203,
     author: 'Arjun T.',
-    createdAt: new Date('2026-04-24T00:00:00.000Z')
+    createdAt: '2026-04-24T00:00:00.000Z'
   },
   {
     id: 8,
@@ -120,7 +120,7 @@ const seedMaterials = [
     desc: 'Key events from 1857 to 1947, important leaders, major movements, and the path to independence.',
     downloads: 167,
     author: 'Meera D.',
-    createdAt: new Date('2026-04-24T00:00:00.000Z')
+    createdAt: '2026-04-24T00:00:00.000Z'
   },
   {
     id: 9,
@@ -130,7 +130,7 @@ const seedMaterials = [
     desc: 'Variables, data types, if/else statements, for loops, and while loops explained with clear code examples for absolute beginners.',
     downloads: 312,
     author: 'Dev C.',
-    createdAt: new Date('2026-04-24T00:00:00.000Z')
+    createdAt: '2026-04-24T00:00:00.000Z'
   },
   {
     id: 10,
@@ -140,7 +140,7 @@ const seedMaterials = [
     desc: 'Building your first webpage from scratch. Covers HTML tags, CSS selectors, flexbox layout, and responsive design basics.',
     downloads: 258,
     author: 'StudyShare',
-    createdAt: new Date('2026-04-24T00:00:00.000Z')
+    createdAt: '2026-04-24T00:00:00.000Z'
   },
   {
     id: 11,
@@ -150,7 +150,7 @@ const seedMaterials = [
     desc: 'Overview of Earth major climate zones, corresponding biomes, flora and fauna, and how human activity affects each region.',
     downloads: 95,
     author: 'Natasha G.',
-    createdAt: new Date('2026-04-24T00:00:00.000Z')
+    createdAt: '2026-04-24T00:00:00.000Z'
   },
   {
     id: 12,
@@ -160,54 +160,9 @@ const seedMaterials = [
     desc: 'How rivers shape landscapes through erosion, transportation, and deposition. Includes diagrams of valleys, ox-bow lakes, and deltas.',
     downloads: 78,
     author: 'StudyShare',
-    createdAt: new Date('2026-04-24T00:00:00.000Z')
+    createdAt: '2026-04-24T00:00:00.000Z'
   }
 ];
-
-const materialSchema = new mongoose.Schema(
-  {
-    id: { type: Number, required: true, unique: true },
-    title: { type: String, required: true, trim: true },
-    subject: { type: String, required: true, enum: allowedSubjects },
-    grade: { type: String, required: true, trim: true },
-    desc: { type: String, required: true, trim: true },
-    downloads: { type: Number, default: 0 },
-    author: { type: String, default: 'Anonymous', trim: true }
-  },
-  {
-    timestamps: { createdAt: true, updatedAt: false },
-    versionKey: false
-  }
-);
-
-const contactSchema = new mongoose.Schema(
-  {
-    name: { type: String, required: true, trim: true },
-    email: { type: String, required: true, trim: true },
-    msg: { type: String, required: true, trim: true }
-  },
-  {
-    timestamps: { createdAt: true, updatedAt: false },
-    versionKey: false
-  }
-);
-
-materialSchema.set('toJSON', {
-  transform: (_doc, ret) => {
-    delete ret._id;
-    return ret;
-  }
-});
-
-contactSchema.set('toJSON', {
-  transform: (_doc, ret) => {
-    delete ret._id;
-    return ret;
-  }
-});
-
-const Material = mongoose.model('Material', materialSchema);
-const Contact = mongoose.model('Contact', contactSchema);
 
 app.use(express.json());
 app.use(express.static(publicDir));
@@ -216,27 +171,94 @@ function normalizeText(value) {
   return String(value || '').trim();
 }
 
-async function seedDatabase() {
-  const count = await Material.countDocuments();
-  if (count === 0) {
-    await Material.insertMany(seedMaterials);
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+async function ensureStoreFile() {
+  await fs.promises.mkdir(dataDir, { recursive: true });
+
+  if (!fs.existsSync(storeFile)) {
+    const initialStore = {
+      materials: seedMaterials,
+      contacts: []
+    };
+
+    await fs.promises.writeFile(storeFile, JSON.stringify(initialStore, null, 2));
+    return initialStore;
   }
+
+  const store = await readStore();
+
+  if (!Array.isArray(store.materials) || !Array.isArray(store.contacts)) {
+    const repairedStore = {
+      materials: Array.isArray(store.materials) ? store.materials : seedMaterials,
+      contacts: Array.isArray(store.contacts) ? store.contacts : []
+    };
+
+    await writeStore(repairedStore);
+    return repairedStore;
+  }
+
+  if (store.materials.length === 0) {
+    store.materials = seedMaterials;
+    await writeStore(store);
+  }
+
+  return store;
+}
+
+async function readStore() {
+  const raw = await fs.promises.readFile(storeFile, 'utf8');
+  return JSON.parse(raw);
+}
+
+async function writeStore(store) {
+  await fs.promises.writeFile(storeFile, JSON.stringify(store, null, 2));
+}
+
+function sortMaterials(items) {
+  return [...items].sort((a, b) => {
+    const timeA = new Date(a.createdAt || 0).getTime();
+    const timeB = new Date(b.createdAt || 0).getTime();
+
+    if (timeA !== timeB) {
+      return timeB - timeA;
+    }
+
+    return (b.id || 0) - (a.id || 0);
+  });
+}
+
+function matchesMaterial(material, subject, searchPattern) {
+  if (subject && subject !== 'all' && material.subject !== subject) {
+    return false;
+  }
+
+  if (!searchPattern) {
+    return true;
+  }
+
+  return [
+    material.title,
+    material.desc,
+    material.grade,
+    material.author,
+    material.subject
+  ].some((field) => searchPattern.test(String(field || '')));
 }
 
 app.get('/api/health', async (_req, res, next) => {
   try {
-    const [materials, contacts] = await Promise.all([
-      Material.countDocuments(),
-      Contact.countDocuments()
-    ]);
+    const store = await ensureStoreFile();
 
     res.json({
       ok: true,
       port: PORT,
-      mongo: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
-      database: mongoose.connection.name,
-      materials,
-      contacts
+      storage: 'json',
+      storeFile,
+      materials: store.materials.length,
+      contacts: store.contacts.length
     });
   } catch (error) {
     next(error);
@@ -245,32 +267,17 @@ app.get('/api/health', async (_req, res, next) => {
 
 app.get('/api/materials', async (req, res, next) => {
   try {
+    const store = await ensureStoreFile();
     const search = normalizeText(req.query.search);
     const subject = normalizeText(req.query.subject).toLowerCase();
-    const query = {};
-
-    if (subject && subject !== 'all') {
-      query.subject = subject;
-    }
-
-    if (search) {
-      query.$or = [
-        { title: { $regex: search, $options: 'i' } },
-        { desc: { $regex: search, $options: 'i' } },
-        { grade: { $regex: search, $options: 'i' } },
-        { author: { $regex: search, $options: 'i' } },
-        { subject: { $regex: search, $options: 'i' } }
-      ];
-    }
-
-    const [items, total] = await Promise.all([
-      Material.find(query).sort({ createdAt: -1, id: -1 }).lean(),
-      Material.countDocuments()
-    ]);
+    const searchPattern = search ? new RegExp(escapeRegExp(search), 'i') : null;
+    const items = sortMaterials(
+      store.materials.filter((material) => matchesMaterial(material, subject, searchPattern))
+    );
 
     res.json({
       items,
-      total,
+      total: store.materials.length,
       filtered: items.length
     });
   } catch (error) {
@@ -294,18 +301,23 @@ app.post('/api/materials', async (req, res, next) => {
       return res.status(400).json({ error: 'invalid subject' });
     }
 
-    const lastMaterial = await Material.findOne().sort({ id: -1 }).lean();
-    const material = await Material.create({
-      id: (lastMaterial?.id || 0) + 1,
+    const store = await ensureStoreFile();
+    const nextId = store.materials.reduce((maxId, item) => Math.max(maxId, Number(item.id) || 0), 0) + 1;
+    const material = {
+      id: nextId,
       title,
       subject,
       grade,
       desc,
       author,
-      downloads: 0
-    });
+      downloads: 0,
+      createdAt: new Date().toISOString()
+    };
 
-    res.status(201).json(material.toJSON());
+    store.materials.push(material);
+    await writeStore(store);
+
+    res.status(201).json(material);
   } catch (error) {
     next(error);
   }
@@ -314,17 +326,17 @@ app.post('/api/materials', async (req, res, next) => {
 app.post('/api/materials/:id/download', async (req, res, next) => {
   try {
     const id = Number(req.params.id);
-    const material = await Material.findOneAndUpdate(
-      { id },
-      { $inc: { downloads: 1 } },
-      { new: true }
-    );
+    const store = await ensureStoreFile();
+    const material = store.materials.find((item) => Number(item.id) === id);
 
     if (!material) {
       return res.status(404).json({ error: 'material not found' });
     }
 
-    res.json(material.toJSON());
+    material.downloads = Number(material.downloads || 0) + 1;
+    await writeStore(store);
+
+    res.json(material);
   } catch (error) {
     next(error);
   }
@@ -340,7 +352,15 @@ app.post('/api/contact', async (req, res, next) => {
       return res.status(400).json({ error: 'name, email, and msg are required' });
     }
 
-    await Contact.create({ name, email, msg });
+    const store = await ensureStoreFile();
+    store.contacts.push({
+      name,
+      email,
+      msg,
+      createdAt: new Date().toISOString()
+    });
+    await writeStore(store);
+
     res.status(201).json({ ok: true });
   } catch (error) {
     next(error);
@@ -357,12 +377,11 @@ app.use((err, _req, res, _next) => {
 });
 
 async function startServer() {
-  await mongoose.connect(MONGO_URI);
-  await seedDatabase();
+  await ensureStoreFile();
 
   app.listen(PORT, () => {
     console.log(`StudyShare server running on http://localhost:${PORT}`);
-    console.log(`MongoDB connected at ${MONGO_URI}`);
+    console.log(`Using JSON store at ${storeFile}`);
   });
 }
 
